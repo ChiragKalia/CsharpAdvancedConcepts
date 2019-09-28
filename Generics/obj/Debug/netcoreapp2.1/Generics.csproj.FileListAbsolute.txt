@@ -1,0 +1,11 @@
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\obj\Debug\netcoreapp2.1\Generics.csprojAssemblyReference.cache
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\obj\Debug\netcoreapp2.1\Generics.csproj.CoreCompileInputs.cache
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\obj\Debug\netcoreapp2.1\Generics.AssemblyInfoInputs.cache
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\obj\Debug\netcoreapp2.1\Generics.AssemblyInfo.cs
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\bin\Debug\netcoreapp2.1\Generics.deps.json
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\bin\Debug\netcoreapp2.1\Generics.runtimeconfig.json
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\bin\Debug\netcoreapp2.1\Generics.runtimeconfig.dev.json
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\bin\Debug\netcoreapp2.1\Generics.dll
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\bin\Debug\netcoreapp2.1\Generics.pdb
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\obj\Debug\netcoreapp2.1\Generics.dll
+D:\Projects\Learning\CsharpAdvancedConcepts\Generics\obj\Debug\netcoreapp2.1\Generics.pdb
