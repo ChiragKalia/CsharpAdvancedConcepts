@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\Generics.csproj": {}
+    "D:\\Projects\\CsharpAdvancedConcepts\\Lambda Expressions\\LambdaExpressions.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\Generics.csproj": {
+    "D:\\Projects\\CsharpAdvancedConcepts\\Lambda Expressions\\LambdaExpressions.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\Generics.csproj",
-        "projectName": "Generics",
-        "projectPath": "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\Generics.csproj",
+        "projectUniqueName": "D:\\Projects\\CsharpAdvancedConcepts\\Lambda Expressions\\LambdaExpressions.csproj",
+        "projectName": "LambdaExpressions",
+        "projectPath": "D:\\Projects\\CsharpAdvancedConcepts\\Lambda Expressions\\LambdaExpressions.csproj",
         "packagesPath": "C:\\Users\\GEEKYD3V\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\obj\\",
+        "outputPath": "D:\\Projects\\CsharpAdvancedConcepts\\Lambda Expressions\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\ProgramData\\Xamarin\\NuGet\\",

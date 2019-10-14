@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\Generics.csproj": {}
+    "D:\\Projects\\CsharpAdvancedConcepts\\Delegates\\Delegates.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\Generics.csproj": {
+    "D:\\Projects\\CsharpAdvancedConcepts\\Delegates\\Delegates.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\Generics.csproj",
-        "projectName": "Generics",
-        "projectPath": "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\Generics.csproj",
+        "projectUniqueName": "D:\\Projects\\CsharpAdvancedConcepts\\Delegates\\Delegates.csproj",
+        "projectName": "Delegates",
+        "projectPath": "D:\\Projects\\CsharpAdvancedConcepts\\Delegates\\Delegates.csproj",
         "packagesPath": "C:\\Users\\GEEKYD3V\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\CsharpAdvancedConcepts\\Generics\\obj\\",
+        "outputPath": "D:\\Projects\\CsharpAdvancedConcepts\\Delegates\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\ProgramData\\Xamarin\\NuGet\\",
@@ -23,14 +23,14 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.1"
+          "netcoreapp2.2"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp2.1": {
+          "netcoreapp2.2": {
             "projectReferences": {}
           }
         },
@@ -41,14 +41,7 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.1": {
-          "dependencies": {
-            "Microsoft.NETCore.App": {
-              "target": "Package",
-              "version": "[2.1.0, )",
-              "autoReferenced": true
-            }
-          },
+        "netcoreapp2.2": {
           "imports": [
             "net461"
           ],
