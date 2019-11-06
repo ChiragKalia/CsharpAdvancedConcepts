@@ -1,0 +1,11 @@
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\bin\Debug\netcoreapp2.2\ExtensionMethods.deps.json
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\bin\Debug\netcoreapp2.2\ExtensionMethods.runtimeconfig.json
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\bin\Debug\netcoreapp2.2\ExtensionMethods.runtimeconfig.dev.json
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\bin\Debug\netcoreapp2.2\ExtensionMethods.dll
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\bin\Debug\netcoreapp2.2\ExtensionMethods.pdb
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\obj\Debug\netcoreapp2.2\ExtensionMethods.csprojAssemblyReference.cache
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\obj\Debug\netcoreapp2.2\ExtensionMethods.csproj.CoreCompileInputs.cache
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\obj\Debug\netcoreapp2.2\ExtensionMethods.AssemblyInfoInputs.cache
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\obj\Debug\netcoreapp2.2\ExtensionMethods.AssemblyInfo.cs
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\obj\Debug\netcoreapp2.2\ExtensionMethods.dll
+D:\Projects\Learning\CsharpAdvancedConcepts\ExtensionMethods\obj\Debug\netcoreapp2.2\ExtensionMethods.pdb
