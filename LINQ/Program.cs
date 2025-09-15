@@ -1,6 +1,9 @@
 ﻿using Dumpify;
-`
+
 IEnumerable<int> collection = [1, 2, 3, 4, 5];
+
+//https://www.youtube.com/watch?v=7-P6Mxl5elg
+//--------------------------------------FILTERING--------------------------------------
 
 //Where
 collection.Where(x => x > 2).Dump();
