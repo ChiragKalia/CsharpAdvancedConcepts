@@ -1,1 +1,0 @@
-Did not cover LINQ as I am already proficient in it. You are welcome if you wish to add any code.
