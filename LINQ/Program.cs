@@ -71,6 +71,11 @@ collection.Prepend(0).Dump();
 
 //--------------------------------------AGGREGATION METHODS--------------------------------------
 
-//Count - Immediate Execution
+//Max and MaxBy - Immediate Execution
 
+IEnumerable<Person> People = [new("You", 15), new("Me", 16)];
 
+People.Max(i => i.age).Dump();  //Changes the actual object.
+People.MaxBy(i => i.age).Dump(); // Doesn't change the actual object.
+
+record Person(string name, int age);
