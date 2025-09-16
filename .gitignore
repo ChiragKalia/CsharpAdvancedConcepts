@@ -1,7 +1,8 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+﻿# Visual Studio / .NET
+.vs/
+*.user
+*.suo
 
-/Delegates/.vs
-/LINQ/.vs/LINQ
-/LINQ/obj
+# Ignore all bin and obj directories recursively
+bin/
+obj/
