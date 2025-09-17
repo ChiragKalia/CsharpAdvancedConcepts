@@ -6,3 +6,35 @@
 # Ignore all bin and obj directories recursively
 bin/
 obj/
+/Delegates/obj/Delegates.csproj.nuget.dgspec.json
+/Delegates/obj/Delegates.csproj.nuget.g.props
+/Delegates/obj/Delegates.csproj.nuget.g.targets
+/Delegates/obj/project.assets.json
+/Events/obj/Events.csproj.nuget.dgspec.json
+/Events/obj/Events.csproj.nuget.g.props
+/Events/obj/Events.csproj.nuget.g.targets
+/Events/obj/project.assets.json
+/Events/obj/Debug/netcoreapp2.2/Events.AssemblyInfo.cs
+/Events/obj/Debug/netcoreapp2.2/Events.AssemblyInfoInputs.cache
+/Events/obj/Debug/netcoreapp2.2/Events.assets.cache
+/ExtensionMethods/obj/Debug/netcoreapp2.2/ExtensionMethods.AssemblyInfo.cs
+/ExtensionMethods/obj/Debug/netcoreapp2.2/ExtensionMethods.AssemblyInfoInputs.cache
+/ExtensionMethods/obj/Debug/netcoreapp2.2/ExtensionMethods.assets.cache
+/ExtensionMethods/obj/ExtensionMethods.csproj.nuget.dgspec.json
+/ExtensionMethods/obj/ExtensionMethods.csproj.nuget.g.props
+/ExtensionMethods/obj/ExtensionMethods.csproj.nuget.g.targets
+/ExtensionMethods/obj/project.assets.json
+/Generics/obj/Debug/netcoreapp2.1/Generics.AssemblyInfo.cs
+/Generics/obj/Debug/netcoreapp2.1/Generics.AssemblyInfoInputs.cache
+/Generics/obj/Debug/netcoreapp2.1/Generics.assets.cache
+/Generics/obj/Generics.csproj.nuget.dgspec.json
+/Generics/obj/Generics.csproj.nuget.g.props
+/Generics/obj/Generics.csproj.nuget.g.targets
+/Generics/obj/project.assets.json
+/Lambda Expressions/obj/Debug/netcoreapp2.1/LambdaExpressions.AssemblyInfo.cs
+/Lambda Expressions/obj/Debug/netcoreapp2.1/LambdaExpressions.AssemblyInfoInputs.cache
+/Lambda Expressions/obj/Debug/netcoreapp2.1/LambdaExpressions.assets.cache
+/Lambda Expressions/obj/LambdaExpressions.csproj.nuget.dgspec.json
+/Lambda Expressions/obj/LambdaExpressions.csproj.nuget.g.props
+/Lambda Expressions/obj/LambdaExpressions.csproj.nuget.g.targets
+/Lambda Expressions/obj/project.assets.json

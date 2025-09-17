@@ -71,11 +71,53 @@ collection.Prepend(0).Dump();
 
 //--------------------------------------AGGREGATION METHODS--------------------------------------
 
+//Count (Immediate Execution)
+collection.Where(i=> i > 2).Count().Dump();
+
+// TryGetNonEnumeratedCount - Returns the count of elements in a collection without enumerating it.
+// if the count cannot be determined without enumeration, it returns false, otherwise true.
+collection.TryGetNonEnumeratedCount(out int count).Dump();
+
 //Max and MaxBy - Immediate Execution
 
 IEnumerable<Person> People = [new("You", 15), new("Me", 16)];
 
-People.Max(i => i.age).Dump();  //Changes the actual object.
-People.MaxBy(i => i.age).Dump(); // Doesn't change the actual object.
+//Max returns the maximum value based on the selector provided.
+People.Max(i => i.age).Dump();
+//MaxBy returns the element that has the maximum value based on the selector provided.
+People.MaxBy(i => i.age).Dump();
+
+//Min and MinBy - Immediate Execution
+People.Min(i => i.age).Dump(); 
+People.MinBy(i => i.age).Dump(); //If you don't want to manipualte the actual object.
+
+//Sum - Immediate Execution - Works only on numeric types.
+collection.Sum().Dump();
+
+//Average - Immediate Execution - Works only on numeric types.
+collection.Average().Dump();
+
+//LongCount - Immediate Execution - Returns long instead of int.
+collection.LongCount().Dump();
+
+//Aggregate - Immediate Execution - More generalized form of aggregation. Under the hood it uses a loop to iterate through each element and perform the operation specified.
+//Underrated extension method.
+// This is implementing Sliding window technique, where we are taking two elements at a time and performing the operation specified. Then x is replaced by the result of the operation and y is replaced by the next element in the collection.
+collection.Aggregate((x, y) => x + y).Dump(); //Sum of all elements.
+
+//Overload with seed value.
+collection.Aggregate(10, (x, y) => x + y).Dump(); //Sum of all elements + seed value.
+
+//Overload with seed value and result selector.
+collection.Aggregate(10, (x, y) => x + y, x => x/2).Dump(); // (Sum of all elements + seed value) divided by 2.
+
+//Let's say you want to display the list in a comma separated format.
+collection.Select(x => x.ToString()).Aggregate((x, y) => x + ", " + y).Dump();
+
+
+//--------------------------------------ELEMENT OPERATORS--------------------------------------
+
+// First - Immediate Execution
+collection.First().Dump();
 
 record Person(string name, int age);
