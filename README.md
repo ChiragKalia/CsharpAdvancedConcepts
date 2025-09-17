@@ -1,7 +1,5 @@
 # CsharpAdvancedConcepts
 Hands-On With C# Advanced Topics
 
-In this repo, I'll be implementing what I learned from Mosh Hamedani's Udemy Course: C# Advanced Topics: Prepare for Technical Interviews
-
-Here' the UDEMY Link: https://www.udemy.com/course/csharp-advanced/
+Implementations include Delegates, Events, Generics, LINQ (All methods), Lambda Expressions and much more.
 
