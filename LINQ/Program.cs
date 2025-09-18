@@ -118,6 +118,15 @@ collection.Select(x => x.ToString()).Aggregate((x, y) => x + ", " + y).Dump();
 //--------------------------------------ELEMENT OPERATORS--------------------------------------
 
 // First - Immediate Execution
+//If there are no elements, this will output InvalidOperationException.
 collection.First().Dump();
+
+//If you don't want to output exception in case of no elements, you can use FirstOrDefault
+//which outputs the default value of the type specified.
+
+collection.FirstOrDefault().Dump();
+
+//If you want to mention specific default value, you can do so 
+collection.FirstOrDefault(Int32.MinValue).Dump();
 
 record Person(string name, int age);
