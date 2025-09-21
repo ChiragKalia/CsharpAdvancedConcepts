@@ -3,6 +3,10 @@
 IEnumerable<int> collection = [1, 2, 3, 4, 5];
 
 //https://www.youtube.com/watch?v=7-P6Mxl5elg
+
+//Using Dumpify package to simplify console outputs.
+// Instead of writing a separate Console.WriteLine(), you can simply use .Dump() method to output values to the console.
+
 //--------------------------------------FILTERING--------------------------------------
 
 //Where
@@ -80,7 +84,7 @@ collection.TryGetNonEnumeratedCount(out int count).Dump();
 
 //Max and MaxBy - Immediate Execution
 
-IEnumerable<Person> People = [new("You", 15), new("Me", 16)];
+IEnumerable<Person> People = [new("You", 15), new("Me", 16), new("Them", 16)];
 
 //Max returns the maximum value based on the selector provided.
 People.Max(i => i.age).Dump();
@@ -119,6 +123,7 @@ collection.Select(x => x.ToString()).Aggregate((x, y) => x + ", " + y).Dump();
 
 // First - Immediate Execution
 //If there are no elements, this will output InvalidOperationException.
+//This will return first element in the collection. Same goes for Last() - it will return the last element in the collection.
 collection.First().Dump();
 
 //If you don't want to output exception in case of no elements, you can use FirstOrDefault
@@ -129,4 +134,37 @@ collection.FirstOrDefault().Dump();
 //If you want to mention specific default value, you can do so 
 collection.FirstOrDefault(Int32.MinValue).Dump();
 
+//Check if the collection has only one element or not
+collection.Single().Dump();
+
+//If collection length is zero and you want to return a specific default
+collection.SingleOrDefault(-1).Dump();  
+
+//ElementAt, ElementAtOrDefault
+//This will return element at the specified index. If the element doesn't exist, then it would throw IndexOutofRange exception.
+collection.ElementAt(0).Dump();
+// If we don't want to throw an exception, we can use ElementAtOrDefault instead
+
+//DefaultIfEmpty - Add a default element to collection if it is empty.
+collection.DefaultIfEmpty().Dump();
+
+//--------------------------------------CONVERSION METHODS--------------------------------------
+// Immediate Execution
+// ToArray - Converts the collection to an array.
+collection.ToArray().Dump();
+// ToList - Similarly turns collection to a list.
+// ToDictionary - Similarly turns collection to a dictionary.
+collection.ToDictionary(key=> key, value=> "Val").Dump();
+// ToHashSet - Convert this to Hashset.
+collection.ToHashSet();
+// ToLookup - If you want to create a lookup table based on the age of the Person record.
+// This will group all records in collection based on the age. 
+People.ToLookup(x => x.age).Dump();
+// If we want to only display Persons's name whose age is 16, we can do the following
+People.ToLookup(x => x.age)[16].Dump();
+// If you believe there is going to be only one person that matches this criteria and want to display their name, you can do the following:
+People.ToLookup(x => x.age)[15].Single().name.Dump();
+
+
 record Person(string name, int age);
+
