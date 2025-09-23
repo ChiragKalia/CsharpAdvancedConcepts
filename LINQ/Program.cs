@@ -1,6 +1,7 @@
 ﻿using Dumpify;
+using System;
 
-IEnumerable<int> collection = [1, 2, 3, 4, 5];
+IEnumerable<int> collection = [1, 2, 3, 4, 5, 1];
 
 //https://www.youtube.com/watch?v=7-P6Mxl5elg
 
@@ -84,7 +85,7 @@ collection.TryGetNonEnumeratedCount(out int count).Dump();
 
 //Max and MaxBy - Immediate Execution
 
-IEnumerable<Person> People = [new("You", 15), new("Me", 16), new("Them", 16)];
+IEnumerable<Person> People = [new(0, "You", 15), new(1, "Me", 16), new(2, "Them", 16)];
 
 //Max returns the maximum value based on the selector provided.
 People.Max(i => i.age).Dump();
@@ -135,10 +136,11 @@ collection.FirstOrDefault().Dump();
 collection.FirstOrDefault(Int32.MinValue).Dump();
 
 //Check if the collection has only one element or not
-collection.Single().Dump();
+//collection.Single().Dump();
 
-//If collection length is zero and you want to return a specific default
-collection.SingleOrDefault(-1).Dump();  
+//If collection length is zero and you want to return a specific default. 
+//Will throw an InvalidOperationException if sequence contains more than one element.
+//collection.SingleOrDefault(-1).Dump();  
 
 //ElementAt, ElementAtOrDefault
 //This will return element at the specified index. If the element doesn't exist, then it would throw IndexOutofRange exception.
@@ -154,7 +156,7 @@ collection.DefaultIfEmpty().Dump();
 collection.ToArray().Dump();
 // ToList - Similarly turns collection to a list.
 // ToDictionary - Similarly turns collection to a dictionary.
-collection.ToDictionary(key=> key, value=> "Val").Dump();
+//collection.ToDictionary(key=> key, value=> "Val").Dump();
 // ToHashSet - Convert this to Hashset.
 collection.ToHashSet();
 // ToLookup - If you want to create a lookup table based on the age of the Person record.
@@ -165,6 +167,63 @@ People.ToLookup(x => x.age)[16].Dump();
 // If you believe there is going to be only one person that matches this criteria and want to display their name, you can do the following:
 People.ToLookup(x => x.age)[15].Single().name.Dump();
 
+//--------------------------------------GENERATION METHODS--------------------------------------
 
-record Person(string name, int age);
+// AsEnumerable, AsQueryable
+//These simply cast the collection into IEnumerable or IQueryable
+//Range, Repeat, Empty - Immediate Execution
 
+//Range - Get numbers from a specified index to the count. For example if you want numbers from 1 to 100.
+Enumerable.Range(1, 100).Dump(); // Creates an enumerable which holds numbers from 1 to 100.
+
+//Repeat - Repeats one value to the count specified
+Enumerable.Repeat(0, 100).Dump();
+
+//Empty - Generates an empty enumerable of the type specified.
+//This is static, so if you reference it in multiple areas of your code, it won't create new lists.
+Enumerable.Empty<int>().Dump();
+
+//--------------------------------------SET OPERATIONS--------------------------------------
+
+// Distinct, DistinctBy
+// Distinct - gives us the unique values in the collection.
+collection.Distinct().Dump();
+// DistinctBy - If you have a collection that has a set of fields and you want to take the distinct by a particular field.
+//For the below example, it would output all Persons with distinct ages
+People.DistinctBy(i => i.age).Dump();
+
+IEnumerable<int> setOp1 = [1,2,3];
+IEnumerable<int> setOp2 = [2,3,4];
+
+//Union - Gets us the combination of the distinct elements in both collections. For the above case it would return 1,2,3,4
+setOp1.Union(setOp2).Dump();
+
+//Intersect - Gives us the elements that are common in both collections. It would return 2,3
+setOp1.Intersect(setOp2).Dump();
+
+//Except - will only give us the elements in setOp1 that aren't there in setOp2. It would return 1 for the above collections
+setOp1.Except(setOp2).Dump();
+
+IEnumerable<Person> setPpl1 = [new(0, "You", 15), new(1, "Me", 16)];
+IEnumerable<Person> setPpl2 = [new(2, "You", 15)];
+
+//UnionBy - Gives us the combination of distinct elements in both collections but based on the predicate specified.
+//This outputs two persons with id's 0,1 and 2 even though the rest of the fields are not distinct.
+setPpl1.UnionBy(setPpl2, x => x.id).Dump();
+
+//IntersectBy -  Gives us the elements that are common in both collections but based on the predicate specified.
+//For the above example, it would return 0, "You", 15 since we are matching based on the name.
+setPpl1.IntersectBy(setPpl2.Select(x => x.name), p => p.name).Dump();
+
+//ExceptBy - Gives us the elements from setOp1 that aren't there in setOp2 based on the specified condition.
+//Outputs 1, "Me", 16 since that is the only age that isn't there in setPpl2.
+setPpl1.ExceptBy(setPpl2.Select(i => i.age), p => p.age).Dump();
+
+//SequenceEqual - Returns a boolean true or false if two sequences are equal based on the elements.
+// as these two enumerables aren't equal - it returns false.
+setPpl1.SequenceEqual(setPpl2).Dump();
+
+//--------------------------------------Joining and Grouping--------------------------------------
+
+
+record Person(int id, string name, int age);
