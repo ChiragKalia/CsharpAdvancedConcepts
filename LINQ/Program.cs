@@ -2,6 +2,7 @@
 using System;
 
 IEnumerable<int> collection = [1, 2, 3, 4, 5, 1];
+IEnumerable<Person> people = [new(0, "You", 15), new(1, "Me", 16), new(2, "Them", 16)];
 
 // Video reference: https://www.youtube.com/watch?v=7-P6Mxl5elg
 // Demo of all 74 LINQ extension methods with examples.
@@ -32,9 +33,11 @@ collection.TakeWhile(x => x < 2).Dump();
 //--------------------------------------PROJECTION--------------------------------------
 
 // Select - transform each element
+//Select gives us option to get each one of these elements and project them to a different type
 collection.Select(x => x.ToString()).Dump();
 collection.Select(x => x > 2).Dump();
-
+//We can also select only the required fields as below:
+people.Select(p => new { p.name, p.age }).Dump();
 // Select with index
 collection.Select((x, i) => $"Index {i}, Element {x}").Dump();
 
@@ -46,7 +49,7 @@ collection3.SelectMany((x, i) => x.Select(v => $"Index {i}, Value {v}")).Dump();
 // Cast - convert sequence to target type
 collection.Cast<int>().Dump();
 
-// Chunk - split into fixed-size segments
+// Chunk - split into fixed-size segments - Opposite of SelectMany
 collection.Chunk(2).Dump();
 
 //--------------------------------------EXISTENCE / QUANTITY CHECKS--------------------------------------
@@ -70,9 +73,7 @@ collection.Prepend(0).Dump();
 // (Immediate execution methods start here)
 
 collection.Where(i => i > 2).Count().Dump();
-collection.TryGetNonEnumeratedCount(out int count).Dump();
-
-IEnumerable<Person> people = [new(0, "You", 15), new(1, "Me", 16), new(2, "Them", 16)];
+collection.TryGetNonEnumeratedCount(out int count).Dump(); //Only returns count if the collection is already enumerated.
 
 // Max / MaxBy
 people.Max(p => p.age).Dump();
@@ -88,6 +89,8 @@ collection.Average().Dump();
 collection.LongCount().Dump();
 
 // Aggregate - generalized reduction
+//Under the hood it uses a loop to iterate through each element and perform the operation specified.
+// This is implementing Sliding window technique, where we are taking two elements at a time and performing the operation specified. Then x is replaced by the result of the operation and y is replaced by the next element in the collection.
 collection.Aggregate((x, y) => x + y).Dump();             // sum
 collection.Aggregate(10, (x, y) => x + y).Dump();         // seed
 collection.Aggregate(10, (x, y) => x + y, r => r / 2).Dump(); // seed + result selector
@@ -97,7 +100,7 @@ collection.Select(x => x.ToString()).Aggregate((x, y) => x + ", " + y).Dump();
 
 //--------------------------------------ELEMENT OPERATORS--------------------------------------
 
-collection.First().Dump();                          // throws if empty
+collection.First().Dump();                          // throws InvalidOperationException if empty
 collection.FirstOrDefault().Dump();                 // default(T) if empty
 collection.FirstOrDefault(Int32.MinValue).Dump();   // custom default
 
@@ -105,45 +108,58 @@ collection.FirstOrDefault(Int32.MinValue).Dump();   // custom default
 //collection.Single().Dump();
 //collection.SingleOrDefault(-1).Dump();
 
-collection.ElementAt(0).Dump();                     // throws if out of range
+collection.ElementAt(0).Dump();                     // throws IndexOutofRange if out of range
 collection.ElementAtOrDefault(10).Dump();           // safe variant
 
 collection.DefaultIfEmpty().Dump();                 // insert default if empty
 
 //--------------------------------------CONVERSION--------------------------------------
 
+//Converts the collection to the type specified.
 collection.ToArray().Dump();
 collection.ToList().Dump();
 collection.ToHashSet().Dump();
 
+//ToLookup - If you want to create a lookup table based on the condition specified.
 people.ToLookup(p => p.age).Dump();
+// If you want to only display Persons's name whose age is 16, we can do the following
 people.ToLookup(p => p.age)[16].Dump();
 people.ToLookup(p => p.age)[15].Single().name.Dump();
 
 //--------------------------------------GENERATION--------------------------------------
 
+//Range - Get numbers from a specified index to the count.
 Enumerable.Range(1, 100).Dump();
+//Repeat - Repeats one value to the count specified
 Enumerable.Repeat(0, 100).Dump();
+//Empty - Generates an empty enumerable of the type specified.
 Enumerable.Empty<int>().Dump();
 
 //--------------------------------------SET OPERATIONS--------------------------------------
-
+// Distinct - gives us the unique values in the collection.
 collection.Distinct().Dump();
+// DistinctBy - Distinct but by a particular field.
 people.DistinctBy(p => p.age).Dump();
 
 IEnumerable<int> setOp1 = [1, 2, 3];
 IEnumerable<int> setOp2 = [2, 3, 4];
 
+//Union - Gets us the combination of the distinct elements in both collections. For the above case it would return 1,2,3,4
 setOp1.Union(setOp2).Dump();
+//Intersect - Gives us the elements that are common in both collections. It would return 2,3
 setOp1.Intersect(setOp2).Dump();
+//Except - will only give us the elements in setOp1 that aren't there in setOp2. It would return 1 for the above collections
 setOp1.Except(setOp2).Dump();
 
 IEnumerable<Person> setPpl1 = [new(0, "You", 15), new(1, "Me", 16)];
 IEnumerable<Person> setPpl2 = [new(2, "You", 15)];
 
+//Set operations but based on the predicate specified.
 setPpl1.UnionBy(setPpl2, x => x.id).Dump();
 setPpl1.IntersectBy(setPpl2.Select(x => x.name), p => p.name).Dump();
 setPpl1.ExceptBy(setPpl2.Select(i => i.age), p => p.age).Dump();
+
+//Returns a boolean true or false if two sequences are equal based on the elements.
 setPpl1.SequenceEqual(setPpl2).Dump();
 
 //--------------------------------------JOINING / GROUPING--------------------------------------
@@ -154,14 +170,18 @@ coll1.Zip(coll2).Dump();
 
 IEnumerable<Product> products = [new(0, "Shoes"), new(0, "Jacket"), new(1, "Jeans")];
 
+//Join two collections based on the specified field.
 people.Join(products, p => p.id, pr => pr.PersonId, (p, pr) => $"{p.name} bought {pr.name}").Dump();
 
+//One to many relationship, displays an enumerable for the second collection getting joined
 people.GroupJoin(products, p => p.id, pr => pr.PersonId,
     (p, prs) => $"{p.name} bought {string.Join(',', prs)}").Dump();
 
 IEnumerable<int> collec2 = [6, 7, 8, 9, 10];
+//Concatenate both collections
 collection.Concat(collec2).Dump();
 
+//Group collection by a specified field.
 people.GroupBy(p => p.age).Dump();
 IGrouping<int, Person> lastGroup = people.GroupBy(p => p.age).Last();
 lastGroup.Key.Dump();
