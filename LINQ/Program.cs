@@ -3,227 +3,182 @@ using System;
 
 IEnumerable<int> collection = [1, 2, 3, 4, 5, 1];
 
-//https://www.youtube.com/watch?v=7-P6Mxl5elg
-
-//Using Dumpify package to simplify console outputs.
-// Instead of writing a separate Console.WriteLine(), you can simply use .Dump() method to output values to the console.
+// Video reference: https://www.youtube.com/watch?v=7-P6Mxl5elg
+// Demo of all 74 LINQ extension methods with examples.
+// Using Dumpify to print results via .Dump() instead of Console.WriteLine().
 
 //--------------------------------------FILTERING--------------------------------------
 
-//Where
+// Where - filter elements by predicate
 collection.Where(x => x > 2).Dump();
 
-//OfType
+// OfType - filter by type
 IEnumerable<object> collection2 = [1, "abc", 3, 4, 5];
 collection2.OfType<int>().Dump();
 collection2.OfType<string>().Dump();
 
-//Skip, Take
+// Skip / Take - skip or take N elements
 collection.Skip(3).Dump();
 collection.Take(3).Dump();
 
-//SkipLast, TakeLast
+// SkipLast / TakeLast - operate from the end
 collection.SkipLast(3).Dump();
 collection.TakeLast(3).Dump();
 
-//SkipWhile, TakeWhile
-////Continue skipping elements until the predicate is false
+// SkipWhile / TakeWhile - stop/start once predicate fails
 collection.SkipWhile(x => x < 2).Dump();
-////Continue taking elements until the predicate is true
 collection.TakeWhile(x => x < 2).Dump();
 
 //--------------------------------------PROJECTION--------------------------------------
 
-//Select gives us option to get each one of these elements and project them to a different type
+// Select - transform each element
 collection.Select(x => x.ToString()).Dump();
-collection.Select(x => x > 2).Dump(); //Returns true or false.
-//Select with Index overload
-collection.Select((x, i) => $"Index {i} and Element {x}").Dump();
+collection.Select(x => x > 2).Dump();
 
-//Select Many
+// Select with index
+collection.Select((x, i) => $"Index {i}, Element {x}").Dump();
+
+// SelectMany - flatten nested collections
 IEnumerable<List<int>> collection3 = [[1, 2, 3], [4, 5, 6]];
-//Flattens the inner lists into one list.
 collection3.SelectMany(x => x).Dump();
-//SelectMany with Index overload
-collection3.SelectMany((x, i) => x.Select(x => $"index {i} and {x}")).Dump();
+collection3.SelectMany((x, i) => x.Select(v => $"Index {i}, Value {v}")).Dump();
 
-//Cast - from one type to another type
+// Cast - convert sequence to target type
 collection.Cast<int>().Dump();
 
-//Chunk - Divides a collection into multiple collections based on the number of elements specified.
-//Opposite of SelectMany
+// Chunk - split into fixed-size segments
 collection.Chunk(2).Dump();
-//This will create 2 integer arrays from one.
 
-//--------------------------------------EXISTENCE OR QUANTITY CHECKS--------------------------------------
+//--------------------------------------EXISTENCE / QUANTITY CHECKS--------------------------------------
 
-//LINQ USUALLY USES DEFERRED EXECUTION EXCEPT FOR SOME EXTENSION METHODS. BELOW ARE IMMEDIATE EXECUTION METHODS
-
-//Any - Returns true if there is a single element that passes the predicate specified, otherwise false.
+// Any - at least one element matches
 collection.Any(x => x > 2).Dump();
 
-// All - Returns true if all elements pass the predicate, false otherwise.
+// All - every element matches
 collection.All(x => x > 0).Dump();
 
-// Contains - checks if collection contains the element specified in the predicate.
+// Contains - check if element exists
 collection.Contains(10).Dump();
 
 //--------------------------------------SEQUENCE MANIPULATION--------------------------------------
 
-//Append or Prepend to a collection
+// Append / Prepend
 collection = collection.Append(5).Dump();
 collection.Prepend(0).Dump();
 
-//--------------------------------------AGGREGATION METHODS--------------------------------------
+//--------------------------------------AGGREGATION--------------------------------------
+// (Immediate execution methods start here)
 
-//Count (Immediate Execution)
-collection.Where(i=> i > 2).Count().Dump();
-
-// TryGetNonEnumeratedCount - Returns the count of elements in a collection without enumerating it.
-// if the count cannot be determined without enumeration, it returns false, otherwise true.
+collection.Where(i => i > 2).Count().Dump();
 collection.TryGetNonEnumeratedCount(out int count).Dump();
 
-//Max and MaxBy - Immediate Execution
+IEnumerable<Person> people = [new(0, "You", 15), new(1, "Me", 16), new(2, "Them", 16)];
 
-IEnumerable<Person> People = [new(0, "You", 15), new(1, "Me", 16), new(2, "Them", 16)];
+// Max / MaxBy
+people.Max(p => p.age).Dump();
+people.MaxBy(p => p.age).Dump();
 
-//Max returns the maximum value based on the selector provided.
-People.Max(i => i.age).Dump();
-//MaxBy returns the element that has the maximum value based on the selector provided.
-People.MaxBy(i => i.age).Dump();
+// Min / MinBy
+people.Min(p => p.age).Dump();
+people.MinBy(p => p.age).Dump();
 
-//Min and MinBy - Immediate Execution
-People.Min(i => i.age).Dump(); 
-People.MinBy(i => i.age).Dump(); //If you don't want to manipualte the actual object.
-
-//Sum - Immediate Execution - Works only on numeric types.
+// Sum / Average / LongCount
 collection.Sum().Dump();
-
-//Average - Immediate Execution - Works only on numeric types.
 collection.Average().Dump();
-
-//LongCount - Immediate Execution - Returns long instead of int.
 collection.LongCount().Dump();
 
-//Aggregate - Immediate Execution - More generalized form of aggregation. Under the hood it uses a loop to iterate through each element and perform the operation specified.
-//Underrated extension method.
-// This is implementing Sliding window technique, where we are taking two elements at a time and performing the operation specified. Then x is replaced by the result of the operation and y is replaced by the next element in the collection.
-collection.Aggregate((x, y) => x + y).Dump(); //Sum of all elements.
+// Aggregate - generalized reduction
+collection.Aggregate((x, y) => x + y).Dump();             // sum
+collection.Aggregate(10, (x, y) => x + y).Dump();         // seed
+collection.Aggregate(10, (x, y) => x + y, r => r / 2).Dump(); // seed + result selector
 
-//Overload with seed value.
-collection.Aggregate(10, (x, y) => x + y).Dump(); //Sum of all elements + seed value.
-
-//Overload with seed value and result selector.
-collection.Aggregate(10, (x, y) => x + y, x => x/2).Dump(); // (Sum of all elements + seed value) divided by 2.
-
-//Let's say you want to display the list in a comma separated format.
+// Custom aggregate: comma-separated string
 collection.Select(x => x.ToString()).Aggregate((x, y) => x + ", " + y).Dump();
-
 
 //--------------------------------------ELEMENT OPERATORS--------------------------------------
 
-// First - Immediate Execution
-//If there are no elements, this will output InvalidOperationException.
-//This will return first element in the collection. Same goes for Last() - it will return the last element in the collection.
-collection.First().Dump();
+collection.First().Dump();                          // throws if empty
+collection.FirstOrDefault().Dump();                 // default(T) if empty
+collection.FirstOrDefault(Int32.MinValue).Dump();   // custom default
 
-//If you don't want to output exception in case of no elements, you can use FirstOrDefault
-//which outputs the default value of the type specified.
-
-collection.FirstOrDefault().Dump();
-
-//If you want to mention specific default value, you can do so 
-collection.FirstOrDefault(Int32.MinValue).Dump();
-
-//Check if the collection has only one element or not
+// Single / SingleOrDefault - ensure exactly one element
 //collection.Single().Dump();
+//collection.SingleOrDefault(-1).Dump();
 
-//If collection length is zero and you want to return a specific default. 
-//Will throw an InvalidOperationException if sequence contains more than one element.
-//collection.SingleOrDefault(-1).Dump();  
+collection.ElementAt(0).Dump();                     // throws if out of range
+collection.ElementAtOrDefault(10).Dump();           // safe variant
 
-//ElementAt, ElementAtOrDefault
-//This will return element at the specified index. If the element doesn't exist, then it would throw IndexOutofRange exception.
-collection.ElementAt(0).Dump();
-// If we don't want to throw an exception, we can use ElementAtOrDefault instead
+collection.DefaultIfEmpty().Dump();                 // insert default if empty
 
-//DefaultIfEmpty - Add a default element to collection if it is empty.
-collection.DefaultIfEmpty().Dump();
+//--------------------------------------CONVERSION--------------------------------------
 
-//--------------------------------------CONVERSION METHODS--------------------------------------
-// Immediate Execution
-// ToArray - Converts the collection to an array.
 collection.ToArray().Dump();
-// ToList - Similarly turns collection to a list.
-// ToDictionary - Similarly turns collection to a dictionary.
-//collection.ToDictionary(key=> key, value=> "Val").Dump();
-// ToHashSet - Convert this to Hashset.
-collection.ToHashSet();
-// ToLookup - If you want to create a lookup table based on the age of the Person record.
-// This will group all records in collection based on the age. 
-People.ToLookup(x => x.age).Dump();
-// If we want to only display Persons's name whose age is 16, we can do the following
-People.ToLookup(x => x.age)[16].Dump();
-// If you believe there is going to be only one person that matches this criteria and want to display their name, you can do the following:
-People.ToLookup(x => x.age)[15].Single().name.Dump();
+collection.ToList().Dump();
+collection.ToHashSet().Dump();
 
-//--------------------------------------GENERATION METHODS--------------------------------------
+people.ToLookup(p => p.age).Dump();
+people.ToLookup(p => p.age)[16].Dump();
+people.ToLookup(p => p.age)[15].Single().name.Dump();
 
-// AsEnumerable, AsQueryable
-//These simply cast the collection into IEnumerable or IQueryable
-//Range, Repeat, Empty - Immediate Execution
+//--------------------------------------GENERATION--------------------------------------
 
-//Range - Get numbers from a specified index to the count. For example if you want numbers from 1 to 100.
-Enumerable.Range(1, 100).Dump(); // Creates an enumerable which holds numbers from 1 to 100.
-
-//Repeat - Repeats one value to the count specified
+Enumerable.Range(1, 100).Dump();
 Enumerable.Repeat(0, 100).Dump();
-
-//Empty - Generates an empty enumerable of the type specified.
-//This is static, so if you reference it in multiple areas of your code, it won't create new lists.
 Enumerable.Empty<int>().Dump();
 
 //--------------------------------------SET OPERATIONS--------------------------------------
 
-// Distinct, DistinctBy
-// Distinct - gives us the unique values in the collection.
 collection.Distinct().Dump();
-// DistinctBy - If you have a collection that has a set of fields and you want to take the distinct by a particular field.
-//For the below example, it would output all Persons with distinct ages
-People.DistinctBy(i => i.age).Dump();
+people.DistinctBy(p => p.age).Dump();
 
-IEnumerable<int> setOp1 = [1,2,3];
-IEnumerable<int> setOp2 = [2,3,4];
+IEnumerable<int> setOp1 = [1, 2, 3];
+IEnumerable<int> setOp2 = [2, 3, 4];
 
-//Union - Gets us the combination of the distinct elements in both collections. For the above case it would return 1,2,3,4
 setOp1.Union(setOp2).Dump();
-
-//Intersect - Gives us the elements that are common in both collections. It would return 2,3
 setOp1.Intersect(setOp2).Dump();
-
-//Except - will only give us the elements in setOp1 that aren't there in setOp2. It would return 1 for the above collections
 setOp1.Except(setOp2).Dump();
 
 IEnumerable<Person> setPpl1 = [new(0, "You", 15), new(1, "Me", 16)];
 IEnumerable<Person> setPpl2 = [new(2, "You", 15)];
 
-//UnionBy - Gives us the combination of distinct elements in both collections but based on the predicate specified.
-//This outputs two persons with id's 0,1 and 2 even though the rest of the fields are not distinct.
 setPpl1.UnionBy(setPpl2, x => x.id).Dump();
-
-//IntersectBy -  Gives us the elements that are common in both collections but based on the predicate specified.
-//For the above example, it would return 0, "You", 15 since we are matching based on the name.
 setPpl1.IntersectBy(setPpl2.Select(x => x.name), p => p.name).Dump();
-
-//ExceptBy - Gives us the elements from setOp1 that aren't there in setOp2 based on the specified condition.
-//Outputs 1, "Me", 16 since that is the only age that isn't there in setPpl2.
 setPpl1.ExceptBy(setPpl2.Select(i => i.age), p => p.age).Dump();
-
-//SequenceEqual - Returns a boolean true or false if two sequences are equal based on the elements.
-// as these two enumerables aren't equal - it returns false.
 setPpl1.SequenceEqual(setPpl2).Dump();
 
-//--------------------------------------Joining and Grouping--------------------------------------
+//--------------------------------------JOINING / GROUPING--------------------------------------
 
+IEnumerable<int> coll1 = [1, 2, 3];
+IEnumerable<string> coll2 = ["a", "b", "c"];
+coll1.Zip(coll2).Dump();
+
+IEnumerable<Product> products = [new(0, "Shoes"), new(0, "Jacket"), new(1, "Jeans")];
+
+people.Join(products, p => p.id, pr => pr.PersonId, (p, pr) => $"{p.name} bought {pr.name}").Dump();
+
+people.GroupJoin(products, p => p.id, pr => pr.PersonId,
+    (p, prs) => $"{p.name} bought {string.Join(',', prs)}").Dump();
+
+IEnumerable<int> collec2 = [6, 7, 8, 9, 10];
+collection.Concat(collec2).Dump();
+
+people.GroupBy(p => p.age).Dump();
+IGrouping<int, Person> lastGroup = people.GroupBy(p => p.age).Last();
+lastGroup.Key.Dump();
+
+//--------------------------------------SORTING--------------------------------------
+
+collection.Order().Dump();
+collection.OrderDescending().Dump();
+
+people.OrderBy(p => p.age).Dump();
+
+// OrderBy with key transformation (here: reverse order by multiplying with -2)
+collection.OrderBy(i => i * -2).Dump();  // 5,4,3,2,1,1
+
+people.OrderByDescending(p => p.age).Dump();
+
+// ThenBy / ThenByDescending - secondary sorting
 
 record Person(int id, string name, int age);
+record Product(int PersonId, string name);
