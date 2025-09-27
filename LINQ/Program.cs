@@ -179,6 +179,17 @@ collection.OrderBy(i => i * -2).Dump();  // 5,4,3,2,1,1
 people.OrderByDescending(p => p.age).Dump();
 
 // ThenBy / ThenByDescending - secondary sorting
+IEnumerable<Person> peoples = [ 
+    new(0,"John", 24),
+    new(1,"John", 27),
+    new(2,"Mary", 29)
+];
+
+peoples.OrderBy(i => i.name).ThenBy(i => i.age).Dump();
+peoples.OrderBy(i => i.name).ThenByDescending(i => i.age).Dump();
+
+//Reverse - Reverses the elements in collection
+collection.Reverse().Dump();
 
 record Person(int id, string name, int age);
 record Product(int PersonId, string name);
